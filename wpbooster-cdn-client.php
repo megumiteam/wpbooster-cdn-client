@@ -4,9 +4,9 @@ Plugin Name: WPBooster CDN Client
 Author: Digitalcube Co,.Ltd (Takayuki Miyauchi)
 Description: Deliver static files from WPBooster CDN.
 Version: 0.1.0
-Author URI: http://digitalcube.jp/
+Author URI: http://wpbooster.net/
 Domain Path: /languages
-Text Domain: wpbooster-cdn
+Text Domain: wpbooster-cdn-client
 */
 
 
@@ -21,23 +21,29 @@ private $exp = 86400;
 
 function __construct()
 {
-    register_activation_hook(__FILE__, array(&$this, "activation"));
+    register_activation_hook(__FILE__, array(&$this, "is_active_host"));
+    add_action("plugins_loaded", array(&$this, "plugins_loaded"));
+}
 
-    $hooks = array(
-        "stylesheet_directory_uri",
-        "template_directory_uri",
-        "plugins_url",
-        "wp_get_attachment_url",
-        "theme_mod_header_image",
-        "theme_mod_background_image",
-    );
-    foreach ($hooks as $hook) {
-        add_filter(
-            $hook,
-            array(&$this, "filter")
+public function plugins_loaded()
+{
+    if ($this->is_active_host()) {
+        $hooks = array(
+            "stylesheet_directory_uri",
+            "template_directory_uri",
+            "plugins_url",
+            "wp_get_attachment_url",
+            "theme_mod_header_image",
+            "theme_mod_background_image",
         );
+        foreach ($hooks as $hook) {
+            add_filter(
+                $hook,
+                array(&$this, "filter")
+            );
+        }
+        add_filter('the_content', array(&$this, 'the_content'));
     }
-    add_filter('the_content', array(&$this, 'the_content'));
 }
 
 public function the_content($html)
@@ -57,17 +63,29 @@ public function filter($uri)
     );
 }
 
-private function is_active_host()
+public function is_active_host()
 {
-    if ($res = get_transient($this->key)) {
-        return $res;
+    if (get_transient($this->key)) {
+        return true;
     } else {
         $res = wp_remote_head(sprintf($this->api, $this->get_hostname()));
         if ($res['response']['code'] === 200) {
             set_transient($this->key, true, $this->exp);
             return true;
+        } else {
+            delete_transient($this->key);
+            add_action('admin_notices', array(&$this, 'admin_notice'));
+            return false;
         }
     }
+}
+
+public function admin_notice()
+{
+    printf(
+        '<div class="error"><p>%s</p></div>',
+        __('You can not ativate CDN. <a href="http://wpbooster.net/">Please Register to WPBooster Account.</a>')
+    );
 }
 
 private function get_cdn_path()
@@ -82,7 +100,5 @@ private function get_hostname()
 }
 
 } // MegumiCDN
-
-
 
 // EOF
