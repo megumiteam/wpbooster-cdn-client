@@ -21,6 +21,8 @@ private $exp = 86400;
 
 function __construct()
 {
+    register_activation_hook(__FILE__, array(&$this, "activation"));
+
     $hooks = array(
         "stylesheet_directory_uri",
         "template_directory_uri",
@@ -42,16 +44,15 @@ public function the_content($html)
 {
     $up = wp_upload_dir();
     $upload_url = $up['baseurl'];
-    $filterd_url = $this->filter($upload_url);
-    return str_replace($upload_url, $filterd_url, $html);
+    $filtered_url = $this->filter($upload_url);
+    return str_replace($upload_url, $filtered_url, $html);
 }
 
 public function filter($uri)
 {
-    $url = parse_url(home_url());
     return str_replace(
-        'http://'.$url['host'],
-        untrailingslashit(esc_url($this->get_url())),
+        'http://'.$this->get_hostname(),
+        'http://'.$this->get_cdn_path(),
         $uri
     );
 }
@@ -69,28 +70,14 @@ private function is_active_host()
     }
 }
 
-private function get_url()
-{
-    if ($this->is_active_host()) {
-        return str_replace(
-            $this->get_hostname(),
-            $this->get_cdn_path(),
-            home_url()
-        );
-    } else {
-        return home_url();
-    }
-}
-
 private function get_cdn_path()
 {
-    $url = parse_url(home_url("/"));
     return $this->cdn.'/'.$this->get_hostname();
 }
 
 private function get_hostname()
 {
-    $url = parse_url(home_url("/"));
+    $url = parse_url(home_url());
     return $url['host'];
 }
 
