@@ -25,7 +25,9 @@ function __construct()
         "stylesheet_directory_uri",
         "template_directory_uri",
         "plugins_url",
-        "includes_url",
+        "wp_get_attachment_url",
+        "theme_mod_header_image",
+        "theme_mod_background_image",
     );
     foreach ($hooks as $hook) {
         add_filter(
@@ -46,8 +48,9 @@ public function the_content($html)
 
 public function filter($uri)
 {
+    $url = parse_url(home_url());
     return str_replace(
-        untrailingslashit(home_url()),
+        'http://'.$url['host'],
         untrailingslashit(esc_url($this->get_url())),
         $uri
     );
