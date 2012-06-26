@@ -28,21 +28,23 @@ function __construct()
 public function plugins_loaded()
 {
     if ($this->is_active_host()) {
-        $hooks = array(
-            "stylesheet_directory_uri",
-            "template_directory_uri",
-            "plugins_url",
-            "wp_get_attachment_url",
-            "theme_mod_header_image",
-            "theme_mod_background_image",
-        );
-        foreach ($hooks as $hook) {
-            add_filter(
-                $hook,
-                array(&$this, "filter")
+        if (!is_user_logged_in()) {
+            $hooks = array(
+                "stylesheet_directory_uri",
+                "template_directory_uri",
+                "plugins_url",
+                "wp_get_attachment_url",
+                "theme_mod_header_image",
+                "theme_mod_background_image",
             );
+            foreach ($hooks as $hook) {
+                add_filter(
+                    $hook,
+                    array(&$this, "filter")
+                );
+            }
+            add_filter('the_content', array(&$this, 'the_content'));
         }
-        add_filter('the_content', array(&$this, 'the_content'));
     }
 }
 
