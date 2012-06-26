@@ -10,9 +10,14 @@ Text Domain: wpbooster-cdn
 */
 
 
-new MegumiCDN();
+new WPBoosterCDN();
 
-class MegumiCDN {
+class WPBoosterCDN {
+
+private $cdn = 'cdn.wpbooster.net';
+private $api = 'http://api.wpbooster.net/check_host/%s';
+private $key = 'wpbooster-cdn-is-active';
+private $exp = 86400;
 
 function __construct()
 {
@@ -20,6 +25,7 @@ function __construct()
         "stylesheet_directory_uri",
         "template_directory_uri",
         "plugins_url",
+        "includes_url",
     );
     foreach ($hooks as $hook) {
         add_filter(
@@ -47,13 +53,42 @@ public function filter($uri)
     );
 }
 
+private function is_active_host()
+{
+    if ($res = get_transient($this->key)) {
+        return $res;
+    } else {
+        $res = wp_remote_head(sprintf($this->api, $this->get_hostname()));
+        if ($res['response']['code'] === 200) {
+            set_transient($this->key, true, $this->exp);
+            return true;
+        }
+    }
+}
+
 private function get_url()
 {
-    if (defined("CLOUD_FRONT_URL")) {
-        return CLOUD_FRONT_URL;
+    if ($this->is_active_host()) {
+        return str_replace(
+            $this->get_hostname(),
+            $this->get_cdn_path(),
+            home_url()
+        );
     } else {
         return home_url();
     }
+}
+
+private function get_cdn_path()
+{
+    $url = parse_url(home_url("/"));
+    return $this->cdn.'/'.$this->get_hostname();
+}
+
+private function get_hostname()
+{
+    $url = parse_url(home_url("/"));
+    return $url['host'];
 }
 
 } // MegumiCDN
