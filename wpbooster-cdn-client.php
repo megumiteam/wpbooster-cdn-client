@@ -86,7 +86,7 @@ public function admin_notice()
 {
     printf(
         '<div class="error"><p>%s</p></div>',
-        __('You can not ativate CDN. <a href="http://wpbooster.net/">Please Register to WPBooster Account.</a>')
+        __('You can not activate WPBooster CDN. <a href="http://wpbooster.net/">Please Register to WPBooster Account.</a>')
     );
 }
 
