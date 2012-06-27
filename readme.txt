@@ -1,5 +1,5 @@
 === The WPBooster CDN Client ===
-Contributors: miyauchii, wokamoto
+Contributors: miyauchi, wokamoto
 Tags: wpbooster, CDN, cloudfront
 Requires at least: 3.2
 Tested up to: 3.4
