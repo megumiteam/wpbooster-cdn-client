@@ -3,7 +3,7 @@
 Plugin Name: The WPBooster CDN Client
 Author: Digitalcube Co,.Ltd (Takayuki Miyauchi)
 Description: Deliver static files from WPBooster CDN.
-Version: 1.1.0
+Version: 1.2.0
 Author URI: http://wpbooster.net/
 Domain Path: /languages
 Text Domain: wpbooster-cdn-client
@@ -31,6 +31,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+register_deactivation_hook(__FILE__, 'wp_booster_cdn_deactive');
+function wp_booster_cdn_deactive(){
+    delete_option("wpboosterapikey");
+    delete_transient("wpbooster-is-active");
+}
+
 new WPBoosterCDN();
 
 class WPBoosterCDN {
@@ -46,6 +52,23 @@ function __construct()
     register_activation_hook(__FILE__, array(&$this, "is_active_host"));
     add_action("plugins_loaded", array(&$this, "plugins_loaded"));
     add_action('admin_init', array(&$this, 'admin_init'));
+    add_action("admin_bar_menu", array(&$this, "admin_bar_menu"), 9999);
+    add_action("admin_head", array(&$this, "admin_head"));
+}
+
+public function admin_head()
+{
+    $image = plugins_url("img/icon.png", __FILE__);
+    echo <<<EOL
+<style>
+#wp-admin-bar-wp-booster-logo .ab-icon
+{
+    background-image: url($image) !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+}
+</style>
+EOL;
 }
 
 public function admin_init()
@@ -102,7 +125,7 @@ public function filter($uri)
 public function is_active_host()
 {
     if (!$api = get_option($this->key)) {
-        delete_transient($this->key);
+        delete_transient($this->is_active);
         add_action('admin_notices', array(&$this, 'admin_notice'));
         return false;
     }
@@ -125,15 +148,35 @@ public function is_active_host()
 public function admin_notice()
 {
     printf(
-        '<div class="error"><form method="post">Please input WP Booster API Key: <input size=30 type="text" value="" name="wpbooster-api"><input type="submit" value="Save"> <span>%s</span></form></div>',
+        '<div class="error"><form method="post">%s<input size=30 type="text" value="" name="wpbooster-api"><input type="submit" value="Save"> <span>%s</span></form></div>',
+        __('Please input WP Booster API Key: ', 'wpbooster-cdn-client'),
         __('<a href="http://wpbooster.net/cpanel">Sign In</a>', 'wpbooster-cdn-client')
     );
 }
 
-private function get_hostname()
+public function admin_bar_menu($bar)
 {
-    $url = parse_url(home_url());
-    return $url['host'];
+    $bar->add_menu( array(
+        'id'    => 'wp-booster-logo',
+        'title' => '<span class="ab-icon"></span>',
+        'meta'  => array(
+            'title' => __('The WP Booster CDN', 'wpbooster-cdn-client'),
+        ),
+    ) );
+
+    if (get_transient($this->is_active)) {
+        $message = __("WP Booster CDN is running...", "wpbooster-cdn-client");
+    } else {
+        $message = __("WP Booster CDN is stopped.", "wpbooster-cdn-client");
+    }
+
+    $bar->add_menu(array(
+        "parent" => "wp-booster-logo",
+        "id"    => "wp-booster-cdn-running",
+        "title" => $message,
+        'href'  => __('http://wpbooster.net/cpanel/', 'wpbooster-cdn-client'),
+        "meta"  => false,
+    ));
 }
 
 } // MegumiCDN
