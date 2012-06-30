@@ -3,7 +3,7 @@
 Plugin Name: The WPBooster CDN Client
 Author: Digitalcube Co,.Ltd (Takayuki Miyauchi)
 Description: Deliver static files from WPBooster CDN.
-Version: 1.0.0
+Version: 1.1.0
 Author URI: http://wpbooster.net/
 Domain Path: /languages
 Text Domain: wpbooster-cdn-client
@@ -37,13 +37,25 @@ class WPBoosterCDN {
 
 private $cdn = 'cdn.wpbooster.net';
 private $api = 'http://api.wpbooster.net/check_host/%s';
-private $key = 'wpbooster-cdn-is-active';
+private $key = 'wpboosterapikey';
+private $is_active = 'wpbooster-is-active';
 private $exp = 86400;
 
 function __construct()
 {
     register_activation_hook(__FILE__, array(&$this, "is_active_host"));
     add_action("plugins_loaded", array(&$this, "plugins_loaded"));
+    add_action('admin_init', array(&$this, 'admin_init'));
+}
+
+public function admin_init()
+{
+    if (isset($_POST['wpbooster-api']) && $_POST['wpbooster-api']) {
+        if (preg_match("/^[a-zA-Z0-9]{32}$/", $_POST['wpbooster-api'])) {
+            update_option($this->key, $_POST['wpbooster-api']);
+            wp_redirect(admin_url());
+        }
+    }
 }
 
 public function plugins_loaded()
@@ -79,24 +91,31 @@ public function the_content($html)
 
 public function filter($uri)
 {
+    $cdn = get_transient($this->is_active);
     return str_replace(
-        'http://'.$this->get_hostname(),
-        'http://'.$this->get_cdn_path(),
+        $cdn->base_url,
+        'http://'.$this->cdn.'/'.$cdn->id.'/',
         $uri
     );
 }
 
 public function is_active_host()
 {
-    if (get_transient($this->key)) {
+    if (!$api = get_option($this->key)) {
+        delete_transient($this->key);
+        add_action('admin_notices', array(&$this, 'admin_notice'));
+        return false;
+    }
+
+    if (get_transient($this->is_active)) {
         return true;
     } else {
-        $res = wp_remote_head(sprintf($this->api, $this->get_hostname()));
+        $res = wp_remote_get(sprintf($this->api, $api));
         if ($res['response']['code'] === 200) {
-            set_transient($this->key, true, $this->exp);
+            set_transient($this->is_active, json_decode($res['body']), $this->exp);
             return true;
         } else {
-            delete_transient($this->key);
+            delete_transient($this->is_active);
             add_action('admin_notices', array(&$this, 'admin_notice'));
             return false;
         }
@@ -106,14 +125,9 @@ public function is_active_host()
 public function admin_notice()
 {
     printf(
-        '<div class="error"><p>%s</p></div>',
-        __('You can not activate WPBooster CDN. <a href="http://wpbooster.net/">Please Register to WPBooster Account.</a>', 'wpbooster-cdn-client')
+        '<div class="error"><form method="post">Please input WP Booster API Key: <input size=30 type="text" value="" name="wpbooster-api"><input type="submit" value="Save"> <span>%s</span></form></div>',
+        __('<a href="http://wpbooster.net/cpanel">Sign In</a>', 'wpbooster-cdn-client')
     );
-}
-
-private function get_cdn_path()
-{
-    return $this->cdn.'/'.$this->get_hostname();
 }
 
 private function get_hostname()
