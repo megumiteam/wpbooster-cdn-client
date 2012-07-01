@@ -54,12 +54,14 @@ function __construct()
     add_action('admin_init', array(&$this, 'admin_init'));
     add_action("admin_bar_menu", array(&$this, "admin_bar_menu"), 9999);
     add_action("admin_head", array(&$this, "admin_head"));
+    add_action("wp_head", array(&$this, "admin_head"));
 }
 
 public function admin_head()
 {
-    $image = plugins_url("img/icon.png", __FILE__);
-    echo <<<EOL
+    if (is_user_logged_in()) {
+        $image = plugins_url("img/icon.png", __FILE__);
+        echo <<<EOL
 <style>
 #wp-admin-bar-wp-booster-logo .ab-icon
 {
@@ -69,6 +71,7 @@ public function admin_head()
 }
 </style>
 EOL;
+    }
 }
 
 public function admin_init()
