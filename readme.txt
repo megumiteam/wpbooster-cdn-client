@@ -1,13 +1,13 @@
-=== The WPBooster CDN Client ===
+=== The WP Booster CDN Client ===
 Contributors: miyauchi, wokamoto
 Tags: wpbooster, CDN, cloudfront
 Requires at least: 3.2
 Tested up to: 3.4
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-WPBooster CDN will make your WordPress sites load faster and perform Better!
+WP Booster CDN will make your WordPress sites load faster and perform Better!
 
 == Description ==
 
