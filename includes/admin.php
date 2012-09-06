@@ -94,10 +94,12 @@ public function admin_panel()
     foreach ($datas as $stat) {
         $date = preg_replace("/^[0-9]+\-[0-9]+\-/", '', $stat->date);
         $categories[] = $date;
-        $transfers[] = intval($stat->bytes);
+        $transfers[] = intval($stat->bytes/1024/1024);
+        $requests[] = intval($stat->request);
     }
     echo 'var categories = '.json_encode($categories).";\n";
     echo 'var transfers = '.json_encode($transfers).";\n";
+    echo 'var requests = '.json_encode($requests).";\n";
     echo '</script>';
 }
 
