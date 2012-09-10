@@ -1,6 +1,6 @@
 #wpbooster-cdn-client
 {
-    width: 900px;
+    margin-right: 2em;
 }
 
 #wpbooster-cdn-client h2
@@ -18,9 +18,14 @@
     cursor: default;
 }
 
+#wpbooster-cdn-client .postbox
+{
+    color: #555555 !important;
+}
+
 #wpbooster-cdn-client .postbox.half
 {
-    width: 440px;
+    width: 48%;
 }
 
 #wpbooster-cdn-client .postbox.align-left
@@ -33,14 +38,41 @@
     float: right;
 }
 
-.balance
+.api-key,
+.balance,
+.used
 {
-    line-height: 70px;
     text-align: right;
 }
 
 .balance .number
 {
     font-size: 70px;
+}
+
+.api-key
+{
+    margin-bottom: 2em;
+    line-height: 1.4em;
+}
+
+#wpbooster-cdn-client dd
+{
+    margin-bottom: 1em;
+    line-height: 1.4em;
+    margin-left: 1em;
+}
+
+#wpbooster-cdn-client .ft-3column-left
+{
+    float: left;
+    margin: 10px;
+}
+
+.wpbooster-footer
+{
+    width: 980px;
+    padding: 10px;
+    margin: 30px auto;
 }
 
