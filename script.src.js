@@ -23,6 +23,23 @@
                 categories: categories
             }],
             yAxis: [{ // Primary yAxis
+                allowDecimals: false,
+                gridLineWidth: 0,
+                title: {
+                    text: 'Used Points',
+                    style: {
+                        color: '#ffcc55'
+                    }
+                },
+                labels: {
+                    formatter: function() {
+                        return this.value +' points';
+                    },
+                    style: {
+                        color: '#ffcc55'
+                    }
+                }
+            }, {
                 labels: {
                     formatter: function() {
                         return this.value +' MB';
@@ -38,7 +55,7 @@
                     }
                 },
                 opposite: true
-            }, { // Secondary yAxis
+            }, {
                 gridLineWidth: 0,
                 title: {
                     text: 'Requests',
@@ -53,11 +70,13 @@
                     style: {
                         color: '#4572A7'
                     }
-                }
+                },
+                opposite: true
             }],
             tooltip: {
                 formatter: function() {
                     var unit = {
+                        'Points': 'point',
                         'Requests': 'req',
                         'Transfer': 'MB'
                     }[this.series.name];
@@ -75,15 +94,21 @@
                 backgroundColor: '#FFFFFF'
             },
             series: [{
+                name: 'Points',
+                color: '#ffcc55',
+                type: 'column',
+                data: used
+            }, {
                 name: 'Requests',
                 color: '#4572A7',
                 type: 'spline',
-                yAxis: 1,
+                yAxis: 2,
                 data: requests
             }, {
                 name: 'Transfer',
                 color: '#89A54E',
                 type: 'spline',
+                yAxis: 1,
                 data: transfers
             }]
         });

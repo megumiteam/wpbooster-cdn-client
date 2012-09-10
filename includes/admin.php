@@ -96,10 +96,12 @@ public function admin_panel()
         $categories[] = $date;
         $transfers[] = intval($stat->bytes/1024/1024);
         $requests[] = intval($stat->request);
+        $used[] = intval(ceil($stat->used));
     }
     echo 'var categories = '.json_encode($categories).";\n";
     echo 'var transfers = '.json_encode($transfers).";\n";
     echo 'var requests = '.json_encode($requests).";\n";
+    echo 'var used = '.json_encode($used).";\n";
     echo '</script>';
 }
 
