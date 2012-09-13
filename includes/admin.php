@@ -87,9 +87,9 @@ public function admin_panel()
     echo '</p>';
 */
 
-    $this->add_box('History', $this->get_history(), "");
+    $this->add_box(__('History', "wpbooster-cdn-client"), $this->get_history(), "");
     $this->add_box(
-        'Information',
+        __('Information', 'wpbooster-cdn-client'),
         $this->get_feed(__('http://www.wpbooster.net/feed', 'wpbooster-cdn-client')),
         "half align-left"
     );
@@ -103,45 +103,32 @@ public function admin_panel()
 */
 
     $this->add_box(
-        'Get The Point',
+        __('Get The Point', 'wpbooster-cdn-client'),
         $this->get_point_box(),
         "half align-right"
     );
 
+    echo '</div><!-- end #wpbooster-cdn-client -->';
+
     $footer =<<<EOL
         <div class="wpbooster-footer">
-            <div class="ft-3column-left">
-                <a href="http://en.digitalcube.jp/about/wordpress_consultant/" target="_blank">
-                    <img src="http://cdn.wpbooster.net/7be616c30d28aa68ee31110d2da565c9/wp-content/themes/digitalcube/images/footer/wordpress_consultant_1.gif" width="225" height="95" alt="WordPress CONSULTANT" title="WordPress CONSULTANT"/>
-                </a>
-            </div>
-            <div class="ft-3column-left">
-                <a href="http://www.wpbooster.net/" target="_blank">
-                    <img src="http://cdn.wpbooster.net/7be616c30d28aa68ee31110d2da565c9/wp-content/themes/digitalcube/images/footer/wp_booster.gif" width="225" height="95" alt="WP Booster" title="WP Booster"/>
-                </a>
-            </div>
-            <div class="ft-3column-left">
-                <a href="http://megumi-cloud.com/" target="_blank">
-                    <img src="http://cdn.wpbooster.net/7be616c30d28aa68ee31110d2da565c9/wp-content/themes/digitalcube/images/footer/megumicloud_amimoto.gif" width="225" height="95" alt="megumi cloud" title="megumi cloud"/>
-                </a>
-            </div>
-            <div class="ft-3column-left">
-                <a href="http://wp.remotemanager.me/" target="_blank">
-                    <img src="http://cdn.wpbooster.net/7be616c30d28aa68ee31110d2da565c9/wp-content/themes/digitalcube/images/footer/wp_remote_manager.gif" width="225" height="95" alt="WP remote" title="WP remote"/>
-                </a>
-            </div>
+            <a href="%3\$s" target="_blank"><img src="%1\$s/img/wp_booster.gif" width="200" height="84" alt="WP Booster" title="WP Booster"/></a>
+            <a href="%4\$s" target="_blank"><img src="%1\$s/img/megumicloud_amimoto.gif" width="200" height="84" alt="megumi cloud" title="megumi cloud"/></a>
+            <a href="%5\$s" target="_blank"><img src="%1\$s/img/wp_remote_manager.gif" width="200" height="84" alt="WP remote" title="WP remote"/></a>
+            <a href="%2\$s" target="_blank"><img src="%1\$s/img/wordpress_consultant_1.gif" width="200" height="84" alt="WordPress CONSULTANT" title="WordPress CONSULTANT"/></a>
+            <a href="https://aws.amazon.com/solution-providers/si/digitalcube-co-ltd" target="_blank"><img src="%1\$s/img/aws.png" width="193" height="84" alt="WP remote" title="WP remote"/></a>
         </div>
 EOL;
 
     printf(
         $footer,
+        WPBOOSTER_CDN_CLIENT_URL,
         __('http://en.digitalcube.jp/about/wordpress_consultant/', 'wpbooster-cdn-client'),
         __('http://www.wpbooster.net/', 'wpbooster-cdn-client'),
         __('http://megumi-cloud.com/', 'wpbooster-cdn-client'),
         __('http://wp.remotemanager.me/', 'wpbooster-cdn-client')
     );
 
-    echo '</div><!-- end #wpbooster-cdn-client -->';
 
     echo '<script type="text/javascript">';
     $categories = array();
@@ -169,7 +156,7 @@ private function get_point_box()
     $html .= 'Megumi payment” is a service to pay for WordPress-related services provided by <a href="http://www.digitalcube.jp/">DigitalCube Co. Ltd</a>.';
     $html .= '</p>';
     $html .= '<p>';
-    $html .= __('<a href="https://payment.digitalcube.jp/auth/login?language=en">Get the point in Megumi Payment</a>', 'wpbooster-cdn-client');
+    $html .= __('<a href="https://payment.digitalcube.jp/auth/login?language=en" style="font-size:30px;">Get the point!</a>', 'wpbooster-cdn-client');
     $html .= '</p>';
 
     return $html;

@@ -1,6 +1,7 @@
 #wpbooster-cdn-client
 {
     margin-right: 2em;
+    overflow: auto;
 }
 
 #wpbooster-cdn-client h2
@@ -63,16 +64,14 @@
     margin-left: 1em;
 }
 
-#wpbooster-cdn-client .ft-3column-left
-{
-    float: left;
-    margin: 10px;
-}
-
 .wpbooster-footer
 {
-    width: 980px;
-    padding: 10px;
-    margin: 30px auto;
+    margin-top: 30px;
+    text-align: right;
+}
+
+.wpbooster-footer a
+{
+    margin: 5px;
 }
 
