@@ -72,7 +72,7 @@ public function enqueue_style()
 
 public function admin_panel()
 {
-    if (wp_verify_nonce($_GET['nonce'], 'stop-wpbooster')
+    if (isset($_GET['nonce']) && wp_verify_nonce($_GET['nonce'], 'stop-wpbooster')
             && isset($_GET['action']) && $_GET['action'] == 'stop') {
         $this->stop_wpbooster();
     }
