@@ -37,20 +37,18 @@ public function admin_menu()
 
 public function enqueue_script()
 {
-/*
     wp_enqueue_script(
-        'highchart',
-        WPBOOSTER_CDN_CLIENT_URL.'/Highcharts-2.3.2/js/highcharts.js',
+        'enhance',
+        WPBOOSTER_CDN_CLIENT_URL.'/js/enhance.min.js',
         array('jquery'),
-        filemtime(WPBOOSTER_CDN_CLIENT_DIR.'/Highcharts-2.3.2/js/highcharts.js'),
+        filemtime(WPBOOSTER_CDN_CLIENT_DIR.'/js/enhance.min.js'),
         true
     );
-*/
     wp_enqueue_script(
         'wpbooster-cdn-client',
-        WPBOOSTER_CDN_CLIENT_URL.'/script.js',
+        WPBOOSTER_CDN_CLIENT_URL.'/js/script.js',
         array('jquery'),
-        filemtime(WPBOOSTER_CDN_CLIENT_DIR.'/script.js'),
+        filemtime(WPBOOSTER_CDN_CLIENT_DIR.'/js/script.js'),
         true
     );
 }
@@ -58,10 +56,16 @@ public function enqueue_script()
 public function enqueue_style()
 {
     wp_enqueue_style(
-        'wpbooster-cdn-client',
-        WPBOOSTER_CDN_CLIENT_URL.'/style.css',
+        'jquery-visalize-basic',
+        WPBOOSTER_CDN_CLIENT_URL.'/css/basic.css',
         array(),
-        filemtime(WPBOOSTER_CDN_CLIENT_DIR.'/style.css')
+        filemtime(WPBOOSTER_CDN_CLIENT_DIR.'/css/basic.css')
+    );
+    wp_enqueue_style(
+        'wpbooster-cdn-client',
+        WPBOOSTER_CDN_CLIENT_URL.'/css/style.css',
+        array(),
+        filemtime(WPBOOSTER_CDN_CLIENT_DIR.'/css/style.css')
     );
 }
 
@@ -100,11 +104,21 @@ public function admin_panel()
 
     $footer =<<<EOL
         <div class="wpbooster-footer">
+            <div class="cell">
             <a href="%3\$s" target="_blank"><img src="%1\$s/img/wp_booster.gif" width="200" height="84" alt="WP Booster" title="WP Booster"/></a>
+            </div>
+            <div class="cell">
             <a href="%4\$s" target="_blank"><img src="%1\$s/img/megumicloud_amimoto.gif" width="200" height="84" alt="megumi cloud" title="megumi cloud"/></a>
+            </div>
+            <div class="cell">
             <a href="%5\$s" target="_blank"><img src="%1\$s/img/wp_remote_manager.gif" width="200" height="84" alt="WP remote" title="WP remote"/></a>
+            </div>
+            <div class="cell">
             <a href="%2\$s" target="_blank"><img src="%1\$s/img/wordpress_consultant_1.gif" width="200" height="84" alt="WordPress CONSULTANT" title="WordPress CONSULTANT"/></a>
+            </div>
+            <div class="cell">
             <a href="https://aws.amazon.com/solution-providers/si/digitalcube-co-ltd" target="_blank"><img src="%1\$s/img/aws.png" width="193" height="84" alt="WP remote" title="WP remote"/></a>
+            </div>
         </div>
 EOL;
 
