@@ -7,6 +7,7 @@ class WPBooster_Admin {
 private $key = null;
 private $get_point_by_api = 'http://api.wpbooster.net/get_point_by_api/%s';
 private $get_requests_by_api = 'http://api.wpbooster.net/get_requests_by_api/%s';
+private $stop_wpbooster_api = 'http://api.wpbooster.net/stop/%s';
 private $transient_expire = 3600;
 private $transient_key = 'wpbooster-site-data';
 private $is_active = 'wpbooster-is-active';
@@ -71,6 +72,11 @@ public function enqueue_style()
 
 public function admin_panel()
 {
+    if (wp_verify_nonce($_GET['nonce'], 'stop-wpbooster')
+            && isset($_GET['action']) && $_GET['action'] == 'stop') {
+        $this->stop_wpbooster();
+    }
+
     $data = $this->get_data();
 
     echo '<div class="wrap" id="wpbooster-cdn-client">';
@@ -151,15 +157,14 @@ EOL;
     echo '</script>';
 }
 
-
 private function get_point_box()
 {
     $html = '';
     $html .= '<p>';
     $html .= __('Megumi payment” is a service to pay for WordPress-related services provided by <a href="http://www.digitalcube.jp/">DigitalCube Co. Ltd</a>.', 'wpbooster-cdn-client');
     $html .= '</p>';
-    $html .= '<p style="margin: 50px 0 20px 0;">';
-    $html .= __('<a href="https://payment.digitalcube.jp/auth/login?language=en" style="font-size:30px;">Get the point!</a>', 'wpbooster-cdn-client');
+    $html .= '<p style="margin: 20px 0 20px 0;">';
+    $html .= __('<a class="btn red" href="https://payment.digitalcube.jp/auth/login?language=en">Get the point!</a>', 'wpbooster-cdn-client');
     $html .= '</p>';
 
     return $html;
@@ -206,6 +211,11 @@ private function add_box($title, $content, $style = null)
     echo $content;
     echo '</div><!-- end .inside -->';
     echo '</div><!-- end .postbox -->';
+}
+
+private function stop_wpbooster()
+{
+    $api = sprintf($this->stop_wpbooster_api, $this->key);
 }
 
 private function get_data()
