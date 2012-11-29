@@ -202,12 +202,12 @@ private function get_point_box()
         );
         if (get_option('wpbooster-suspended', 0)) {
             $html .= __(
-                '<button class="btn red">Suspend WP Booster !</button>',
+                '<button class="btn green">Restart WP Booster !</button>',
                 'wpbooster-cdn-client'
             );
         } else {
             $html .= __(
-                '<button class="btn green">Restart WP Booster !</button>',
+                '<button class="btn red">Suspend WP Booster !</button>',
                 'wpbooster-cdn-client'
             );
         }
