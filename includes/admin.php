@@ -125,7 +125,20 @@ public function admin_panel()
             <div class="cell">
             <a href="https://aws.amazon.com/solution-providers/si/digitalcube-co-ltd" target="_blank"><img src="%1\$s/img/aws.png" width="193" height="84" alt="WP remote" title="WP remote"/></a>
             </div>
+
+<div class="widget-container">
+<div class="fb-like-box" data-href="http://www.facebook.com/WPBooster" data-width="1000" data-show-faces="true" data-stream="true" data-header="true"></div>
+</div>
         </div>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 EOL;
 
     printf(
@@ -170,8 +183,14 @@ private function get_point_box()
     if (get_transient($this->is_active)) {
         $html .= '<hr />';
 
-        $html .= "WP Booster is running..."."<br />";
-        $html .= "If you want to stop WP Booster temporarily, please click.";
+        $html .= __(
+            "WP Booster is running...<br />",
+            'wpbooster-cdn-client'
+        );
+        $html .= __(
+            "If you want to stop WP Booster temporarily, please click.",
+            'wpbooster-cdn-client'
+        );
         $html .= '<p style="margin: 20px 0 20px 0;">';
         $html .= sprintf(
             '<form action="%s" method="post">',
