@@ -245,8 +245,8 @@ private function get_history()
     $html .= '<table id="booster-table">';
     $html .= '<tr id="cats"><th>'.__('Date', 'wpbooster-cdn-client').'</th></tr>';
     $html .= '<tr id="points"><th>'.__('Used Points', 'wpbooster-cdn-client').'</th></tr>';
-    $html .= '<tr id="req"><th>'.__('Transfers (MB)', 'wpbooster-cdn-client').'</th></tr>';
-    $html .= '<tr id="tra"><th>'.__('Requests', 'wpbooster-cdn-client').'</th></tr>';
+    $html .= '<tr id="tra"><th>'.__('Transfers (MB)', 'wpbooster-cdn-client').'</th></tr>';
+    $html .= '<tr id="req"><th>'.__('Requests', 'wpbooster-cdn-client').'</th></tr>';
     $html .= '</table>';
     return $html;
 }
