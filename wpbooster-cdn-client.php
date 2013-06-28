@@ -134,10 +134,15 @@ public function the_content($html)
 public function filter($uri)
 {
     $cdn = get_transient($this->is_active);
-    if ($this->is_reserved()) {
-        $cdn_url = '//'.$cdn->id.'.wpbooster.net/';
+    if (is_ssl()) {
+        $scheme = 'https://';
     } else {
-        $cdn_url = '//'.$this->cdn.'/'.$cdn->id.'/';
+        $scheme = 'http://';
+    }
+    if ($this->is_reserved()) {
+        $cdn_url = $scheme.$cdn->id.'.wpbooster.net/';
+    } else {
+        $cdn_url = $scheme.$this->cdn.'/'.$cdn->id.'/';
     }
     return str_replace(
         $cdn->base_url,
