@@ -135,9 +135,9 @@ public function filter($uri)
 {
     $cdn = get_transient($this->is_active);
     if ($this->is_reserved()) {
-        $cdn_url = 'http://'.$cdn->id.'.wpbooster.net/';
+        $cdn_url = '//'.$cdn->id.'.wpbooster.net/';
     } else {
-        $cdn_url = 'http://'.$this->cdn.'/'.$cdn->id.'/';
+        $cdn_url = '//'.$this->cdn.'/'.$cdn->id.'/';
     }
     return str_replace(
         $cdn->base_url,
