@@ -103,7 +103,7 @@ public function plugins_loaded()
     );
 
     if ($this->is_active_host()) {
-        if (!is_user_logged_in() && !get_option('wpbooster-suspended', 0) && !is_ssl()) {
+        if (!is_user_logged_in() && !get_option('wpbooster-suspended', 0)) {
             $hooks = array(
                 "stylesheet_directory_uri",
                 "template_directory_uri",
