@@ -139,13 +139,19 @@ public function filter($uri)
     } else {
         $scheme = 'http://';
     }
+    $base_url = $cdn->base_url;
+    if (preg_match('#^http://#i', $base_url)) {
+       $base_url = array($base_url, str_replace('http://', 'https://', $base_url));
+    } else if (preg_match('#^https://#i', $base_url)) {
+       $base_url = array($base_url, str_replace('https://', 'http://', $base_url));
+    }
     if ($this->is_reserved()) {
         $cdn_url = $scheme.$cdn->id.'.wpbooster.net/';
     } else {
         $cdn_url = $scheme.$this->cdn.'/'.$cdn->id.'/';
     }
     return str_replace(
-        $cdn->base_url,
+        $base_url,
         $cdn_url,
         $uri
     );
