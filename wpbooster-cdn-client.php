@@ -112,6 +112,7 @@ public function plugins_loaded()
                 "theme_mod_header_image",
                 "theme_mod_background_image",
             );
+            $hooks = apply_filters('wpbooster_enabled_hooks', $hooks);
             foreach ($hooks as $hook) {
                 add_filter(
                     $hook,
