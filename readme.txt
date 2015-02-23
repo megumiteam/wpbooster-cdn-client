@@ -7,11 +7,11 @@ Stable tag: 2.7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-WP Booster CDN will make your WordPress sites load faster and perform Better!
+WP Booster CDN will make your WordPress sites load faster and perform better!
 
 == Description ==
 
-[WPBooster](http://wpbooster.net/) CDN will make your WordPress sites load faster and perform Better!
+[WPBooster](http://wpbooster.net/) CDN will make your WordPress sites load faster and perform better!
 
 = Very easy to setup, just enable the plugin and enter your API key =
 
@@ -27,7 +27,7 @@ On 3G connection, the faster technology of WP Booster CDN reduces the time requi
 = Low cost! =
 
 Paying by prepaid point system, so you will not be charged indefinitely.
-Even when you have a sudden increase access, you won’t be charged more than you already paid.
+Even when you have a sudden increase access, you won’t be charged more than what you already paid for.
 Also, if your site is a general blog site (assuming a PV / 2 ~ 3 million/month), it will cost only several hundred yen per month.
 
 = Features =
@@ -35,7 +35,7 @@ Also, if your site is a general blog site (assuming a PV / 2 ~ 3 million/month),
 * CSS, JS, Image files deliver from CDN in US, EU, Asia.
 * Set Cache Control Automatically.
 * Very easy.
-* Most faster!
+* Very fast!
 
 [Features](http://www.wpbooster.net/features/ "Features | WP Booster")
 
