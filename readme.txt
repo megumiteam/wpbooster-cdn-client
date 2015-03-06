@@ -7,7 +7,7 @@ Stable tag: 2.7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-WP Booster CDN will make your WordPress sites load faster and perform Better!
+WP Booster CDN will make your WordPress sites load faster and perform better!
 
 == Description ==
 
@@ -26,18 +26,28 @@ On 3G connection, the faster technology of WP Booster CDN reduces the time requi
 
 = Low cost! =
 
-Paying by prepaid point system, so you will not be charged indefinitely.
-Even when you have a sudden increase access, you won’t be charged more than you already paid.
-Also, if your site is a general blog site (assuming a PV / 2 ~ 3 million/month), it will cost only several hundred yen per month.
+First time users get free 100 points upon sign up. 
+100 points is equivalent to 2.25 GB. If you have consumed this, then you have to purchase prepaid points that we call "Megumi Points".
+The payment for this service is by prepaid points system, so you will not be charged indefinitely.
+Even when you have a sudden increase access, you won’t be charged more than what you've already paid for. 
+Also, if your site is a general blog site (assuming a PV / 2 ~ 3 million/month), it will only cost a few dollars per month.
 
 = Features =
 
-* CSS, JS, Image files deliver from CDN in US, EU, Asia.
+[Features](http://www.wpbooster.net/features/ "Features | WP Booster")
+
+* CSS, JS, Image files delivered from CDN in US, EU, Asia.
 * Set Cache Control Automatically.
 * Very easy.
-* Most faster!
+* Super fast!
+* Global Edge Network: 
+USA (20)
+South America (1)
+Asia (10)
+Australia (1)
+Europe (14)
 
-[Features](http://www.wpbooster.net/features/ "Features | WP Booster")
+[Global Edge Network](http://www.wpbooster.net/wpbooster-global-edge-network/ "Global Edge Network | WP Booster")
 
 = Support =
 
